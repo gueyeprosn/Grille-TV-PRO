@@ -1,0 +1,64 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  // Sans include, tsc ramasse **/* et donc des fichiers hors de rootDir
+  // (ecosystem.config.cjs, pm2-start.js, test-*-quick.ts à la racine).
+  "include": ["src/**/*"],
+  "exclude": [
+    "dist",
+    "src/examples/**/*",
+    "src/scripts/**/*",
+    "src/prisma/init-permissions.ts",
+    // Modules JS historiques, plus importés par le serveur.
+    "src/api.js",
+    "src/auth.js",
+    "src/store.js",
+    "src/models.js"
+  ],
+  "compilerOptions": {
+    // File Layout
+    // Les sorties vont dans dist/ : un .js émis à côté de son .ts masquerait
+    // la source, car les imports internes sont écrits en `.js`.
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // src/telegram-notifier.js est une source JS sans équivalent TypeScript :
+    // sans allowJs, elle serait absente de dist/ et `npm start` échouerait.
+    "allowJs": true,
+
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "nodenext",
+    "target": "esnext",
+    "types": [],
+    // For nodejs:
+    // "lib": ["esnext"],
+    // "types": ["node"],
+    // and npm install -D @types/node
+
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+  }
+}

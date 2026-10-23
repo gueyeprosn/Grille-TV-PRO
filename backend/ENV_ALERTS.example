@@ -1,0 +1,29 @@
+# Configuration des Alertes Broadcast
+# Copier ces variables dans votre fichier .env
+
+# Telegram (pour les alertes)
+TELEGRAM_ENABLED=true
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_CHAT_ID=your_telegram_chat_id
+
+# Email (pour les alertes)
+EMAIL_ENABLED=false
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your_email@example.com
+SMTP_PASSWORD=your_password
+EMAIL_FROM=noreply@broadcastsnplus.com
+EMAIL_TO=regie@broadcastsnplus.com,direction@broadcastsnplus.com
+
+# Horaires d'envoi des alertes
+ALERT_DAILY_MORNING=04:30
+ALERT_DAILY_EVENING=13:30
+
+# Alertes de préparation (en minutes avant diffusion)
+ALERT_PREP_DIRECT=30
+ALERT_PREP_COMMERCIAL=45
+ALERT_PREP_SPECIAL=60
+
+# ID de la grille officielle (pour les alertes automatiques)
+OFFICIAL_GRID_ID=default-grid-id
+

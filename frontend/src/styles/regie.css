@@ -1,0 +1,82 @@
+/**
+ * Styles dédiés au mode Régie ON AIR
+ * Optimisés pour lisibilité à distance (3-5 mètres)
+ */
+
+/* Animation pulse pour badge ON AIR */
+@keyframes regie-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+  }
+  50% {
+    opacity: 0.9;
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.8);
+  }
+}
+
+/* Header fixe */
+.regie-header {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Vue principale */
+.regie-onair-view {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch; /* Smooth scroll sur iOS */
+}
+
+/* Empêcher la sélection de texte pour meilleure lisibilité */
+.regie-onair-view * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Styles pour les programmes */
+.regie-program-title {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.5px;
+}
+
+/* Protection contre veille écran (optionnel) */
+@media (prefers-reduced-motion: no-preference) {
+  .regie-onair-view {
+    animation: regie-keepalive 60s infinite;
+  }
+}
+
+@keyframes regie-keepalive {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.999;
+  }
+}
+
+/* Mode plein écran */
+.regie-onair-view:fullscreen {
+  padding: 0;
+}
+
+.regie-onair-view:-webkit-full-screen {
+  padding: 0;
+}
+
+.regie-onair-view:-moz-full-screen {
+  padding: 0;
+}
+
+.regie-onair-view:-ms-fullscreen {
+  padding: 0;
+}
+

@@ -1,0 +1,308 @@
+// Schéma Prisma pour GrilleTV Pro V4 - Version refondue
+// Base de données stable avec tous les champs requis
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  displayName String?
+  role        Role     @default(VIEWER)
+  passwordHash String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  createdGrids    Grid[]
+  createdPrograms Program[]
+  auditLogs       AuditLog[]
+  coordinationMessages CoordinationMessage[] @relation("CoordinationMessageFrom")
+  tasksAsOwner    Task[]       @relation("TaskOwner")
+  tasksAsCreator  Task[]       @relation("TaskCreator")
+  
+  @@map("users")
+}
+
+model Grid {
+  id         String   @id
+  name       String
+  type       GridType @default(WEEKLY)
+  startDate  DateTime
+  endDate    DateTime
+  status     GridStatus @default(DRAFT)
+  publishedAt DateTime?
+  archivedAt  DateTime?
+  isDefault  Boolean  @default(false)
+  createdBy  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  creator    User     @relation(fields: [createdBy], references: [id])
+  programs   Program[]
+  coordinationMessages CoordinationMessage[] @relation("CoordinationMessageGrid")
+  coordinationTasks Task[] @relation("CoordinationTaskGrid")
+  
+  @@map("grids")
+}
+
+model Program {
+  id          String   @id
+  gridId      String
+  // Nom du programme
+  title       String
+  // Catégorie du programme
+  category    String?
+  // Type de diffusion (LIVE, REPLAY, PAD, ADS, SPECIAL)
+  type        ProgramType @default(PAD)
+  // Libellé de diffusion choisi dans l’interface (ex. Direct, Rediffusion, Pub).
+  // Le champ enum `type` reste la classification technique utilisée par Prisma.
+  typeDiffusion String?
+  // Timing - heure de début
+  startTime   String
+  // Timing - heure de fin
+  endTime     String
+  // Durée en minutes
+  durationMin Int
+  // Jours de diffusion (0=Dimanche, 1=Lundi, ..., 6=Samedi)
+  days        Int[]
+  // Descriptif du programme
+  description String?
+  // Statut opérationnel
+  opStatus    OpStatus @default(DRAFT)
+  archivedAt  DateTime?
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  grid        Grid     @relation(fields: [gridId], references: [id], onDelete: Cascade)
+  creator     User     @relation(fields: [createdBy], references: [id])
+  occurrences ProgramOccurrence[]
+  
+  @@map("programs")
+}
+
+// Une occurrence représente une diffusion datée d'une fiche récurrente.
+// serviceDate est le jour de grille (05:00 → 05:00) ; les horaires avant 05:00
+// appartiennent donc à la journée de grille commencée la veille.
+model ProgramOccurrence {
+  id                 String                    @id @default(cuid())
+  programId          String                    @map("program_id")
+  serviceDate        DateTime                  @db.Date @map("service_date")
+  titleSnapshot      String                    @map("title_snapshot")
+  startTimeSnapshot String                    @map("start_time_snapshot")
+  endTimeSnapshot   String                    @map("end_time_snapshot")
+  durationMinSnapshot Int                     @map("duration_min_snapshot")
+  status             ProgramOccurrenceStatus?
+  createdAt          DateTime                  @default(now()) @map("created_at")
+  updatedAt          DateTime                  @updatedAt @map("updated_at")
+
+  program Program @relation(fields: [programId], references: [id], onDelete: Restrict)
+
+  @@unique([programId, serviceDate])
+  @@index([serviceDate, status])
+  @@map("program_occurrences")
+}
+
+model Incident {
+  id          String   @id @default(cuid())
+  gridId      String
+  programId   String?
+  title       String
+  description String?
+  severity    String?
+  createdAt   DateTime @default(now())
+  
+  @@map("incidents")
+}
+
+model Deviation {
+  id          String   @id @default(cuid())
+  gridId      String
+  programId   String?
+  type        String?
+  description String?
+  createdAt   DateTime @default(now())
+  
+  @@map("deviations")
+}
+
+model AdLog {
+  id          String   @id @default(cuid())
+  gridId      String
+  programId   String?
+  title       String?
+  durationMin Int?
+  createdAt   DateTime @default(now())
+  
+  @@map("adlogs")
+}
+
+model ShiftLog {
+  id          String   @id @default(cuid())
+  gridId      String
+  content     String?
+  createdAt   DateTime @default(now())
+  
+  @@map("shiftlogs")
+}
+
+// Règles de routage des notifications Telegram.
+// Le délai anti-spam est stocké en secondes : l'interface expose un réglage
+// inférieur à la minute (30 s par défaut), qu'un stockage en minutes perdrait.
+model NotificationRule {
+  id          String    @id
+  eventType   String
+  chatId      String
+  target      String    @default("TELEGRAM")
+  channelId   String    @default("default")
+  enabled     Boolean   @default(true)
+  throttleSec Int       @default(30)
+  lastSentAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([enabled, eventType])
+  @@map("notification_rules")
+}
+
+model CoordinationMessage {
+  id          String   @id @default(cuid())
+  gridId      String
+  fromId      String
+  fromName    String
+  content     String
+  type        String   @default("INFO")
+  createdAt   DateTime @default(now())
+  
+  grid        Grid     @relation("CoordinationMessageGrid", fields: [gridId], references: [id], onDelete: Cascade)
+  from        User     @relation("CoordinationMessageFrom", fields: [fromId], references: [id])
+  
+  @@index([gridId, createdAt])
+  @@map("coordination_messages")
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  gridId      String
+  title       String
+  ownerId     String?
+  ownerName   String
+  state       String   @default("TODO")
+  deadline    DateTime?
+  description String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  grid        Grid     @relation("CoordinationTaskGrid", fields: [gridId], references: [id], onDelete: Cascade)
+  owner       User?    @relation("TaskOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  creator     User     @relation("TaskCreator", fields: [createdBy], references: [id])
+  
+  @@index([gridId, state])
+  @@map("coordination_tasks")
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  resource    String
+  action      String
+  description String?
+  createdAt   DateTime @default(now())
+  
+  rolePermissions RolePermission[]
+  
+  @@unique([resource, action])
+  @@map("permissions")
+}
+
+model RolePermission {
+  id           String     @id @default(cuid())
+  role         Role
+  permissionId String
+  userId       String?
+  createdAt    DateTime   @default(now())
+  
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  
+  @@unique([role, permissionId])
+  @@map("role_permissions")
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  entityType String
+  entityId     String
+  action      String
+  userId      String?
+  before      Json?
+  after       Json?
+  changes     Json?
+  ipAddress   String?
+  userAgent   String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+enum Role {
+  ADMIN
+  PROGRAMMER
+  PRODUCTION
+  COMMERCIAL
+  DIRECTION
+  VIEWER
+  REGIE
+}
+
+enum GridType {
+  WEEKLY
+  DAILY
+  CUSTOM
+}
+
+enum GridStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ProgramType {
+  LIVE
+  REPLAY
+  PAD
+  ADS
+  SPECIAL
+}
+
+enum OpStatus {
+  DRAFT
+  READY
+  AIRED
+  CANCELLED
+  DELAYED      // Programme en retard
+  OVERRUN      // Programme qui dépasse son horaire
+  SKIPPED      // Programme sauté
+  MANUAL_OVERRIDE // Override manuel par la régie
+}
+
+enum ProgramOccurrenceStatus {
+  PLANNED
+  ON_AIR
+  AIRED
+  CANCELLED
+}
+

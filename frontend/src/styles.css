@@ -1,0 +1,1468 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===================================
+   🎛️ MODE UI RÉGIE ON AIR
+   =================================== */
+
+/* ===================================
+   ✨ ANIMATIONS MODERNES
+   =================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Animation pulse optimisée pour ON AIR uniquement - Priorité 4 */
+@keyframes pulse-on-air {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(225, 6, 0, 0.5);
+  }
+  50% {
+    opacity: 0.9;
+    box-shadow: 0 0 40px rgba(225, 6, 0, 0.9);
+  }
+}
+
+/* Animation pulse pour alertes critiques uniquement */
+@keyframes pulse-critical {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(225, 6, 0, 0.4);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(225, 6, 0, 0.8);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+  will-change: opacity, transform; /* Optimisation performance */
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+  will-change: opacity, transform; /* Optimisation performance */
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
+  will-change: opacity, transform; /* Optimisation performance */
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
+}
+
+/* ===================================
+   📅 VUE SEMAINE MODERNE
+   =================================== */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Amélioration de la lisibilité des programmes */
+.week-program-modern {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Scrollbar personnalisée pour la grille de sélection */
+.grid-scroll-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.grid-scroll-container::-webkit-scrollbar-track {
+  background: rgba(31, 42, 68, 0.3);
+  border-radius: 6px;
+}
+
+.grid-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.5);
+  border-radius: 6px;
+  border: 2px solid rgba(31, 42, 68, 0.3);
+}
+
+.grid-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.7);
+}
+
+/* Scrollbar personnalisée pour la grille */
+.week-agenda-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.week-agenda-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.week-agenda-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.week-agenda-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark .week-agenda-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .week-agenda-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dark .week-agenda-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===================================
+   🌗 THEME GLOBAL — BROADCAST SN+ PREMIUM
+   =================================== */
+:root {
+  /* Couleurs de base */
+  --bg: #ffffff;
+  --fg: #0b1220;
+  --accent: #2563eb; /* Broadcast Blue */
+  --accent-hover: #1d4ed8;
+  --accent-light: #dbeafe;
+  --neutral: #e2e8f0;
+  --surface: #f8fafc;
+  --surface-hover: #f1f5f9;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.12);
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
+  
+  /* Cards */
+  --card-bg: linear-gradient(180deg, #ffffff, #fbfbfd);
+  --card-bg-solid: #ffffff;
+  --card-text: #081226;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-hover: #f8fafc;
+  
+  /* Texte - Contraste amélioré pour WCAG AA */
+  --muted: #64748b; /* slate-500 - contraste amélioré */
+  --muted-light: #94a3b8; /* slate-400 */
+  --text-primary: #0f172a; /* slate-900 - contraste maximum */
+  --text-secondary: #334155; /* slate-700 - meilleur contraste */
+  --text-error: #dc2626; /* red-600 - erreurs de validation */
+  --border-error: #ef4444; /* red-500 - bordures en erreur */
+  
+  /* Grille */
+  --grid-line: rgba(11,17,32,0.06);
+  --program-accent: #f59e0b;
+  --grid-surface: linear-gradient(150deg, #ffffff 0%, #f5f7fb 48%, #eef2f8 100%);
+  --grid-shadow: 0 32px 68px -48px rgba(15, 23, 42, 0.55);
+  --grid-card: rgba(255, 255, 255, 0.72);
+  --grid-card-border: rgba(15, 23, 42, 0.08);
+  --grid-card-hover: rgba(255, 255, 255, 0.95);
+  --grid-hour-bg: rgba(12, 18, 32, 0.04);
+  --grid-hour-border: rgba(15, 23, 42, 0.1);
+  --program-border: rgba(12, 18, 32, 0.06);
+  --program-glow: rgba(245, 158, 11, 0.2);
+  
+  /* Statuts - cohérents entre thèmes */
+  --status-planned-bg: rgba(148, 163, 184, 0.1);
+  --status-planned-text: #64748b;
+  --status-confirmed-bg: rgba(59, 130, 246, 0.1);
+  --status-confirmed-text: #2563eb;
+  --status-production-bg: rgba(245, 158, 11, 0.1);
+  --status-production-text: #d97706;
+  --status-ready-bg: rgba(34, 197, 94, 0.1);
+  --status-ready-text: #16a34a;
+  --status-onair-bg: rgba(225, 6, 0, 0.15); /* Utiliser --onair-red */
+  --status-onair-text: #E10600; /* Utiliser --onair-red */
+  --status-done-bg: rgba(16, 185, 129, 0.1);
+  --status-done-text: #059669;
+  --status-canceled-bg: rgba(100, 116, 139, 0.1);
+  --status-canceled-text: #475569;
+  
+  /* Slate cohérents */
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  
+  /* ===================================
+     🎚️ PALETTE BROADCAST PREMIUM
+     =================================== */
+  /* Fonds broadcast */
+  --bg-main: #0B1220;
+  --bg-surface: #111A2E;
+  --bg-elevated: #16213A;
+  
+  /* Texte broadcast */
+  --text-primary-broadcast: #FFFFFF;
+  --text-secondary-broadcast: #B0B7C3;
+  --text-muted-broadcast: #7A8599;
+  
+  /* Lignes / grilles */
+  --border-subtle: #1F2A44;
+  
+  /* États broadcast */
+  --onair-red: #E10600;      /* STRICTEMENT ON AIR */
+  --warning-orange: #FF9F1C; /* T-2 min */
+  --success-green: #2ECC71;
+}
+
+.mobile-app-shell {
+  background: var(--bg);
+  color: var(--text-primary);
+  --mobile-nav-bg: rgba(255, 255, 255, 0.96);
+  --mobile-nav-border: rgba(15, 23, 42, 0.12);
+}
+
+.mobile-app-shell[data-theme="dark"] {
+  --mobile-nav-bg: rgba(10, 22, 40, 0.96);
+  --mobile-nav-border: rgba(255, 255, 255, 0.12);
+}
+
+.mobile-app-header {
+  background: var(--card-bg-solid);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+.mobile-route-button {
+  background: var(--card-bg-solid);
+  border-color: var(--card-border);
+  color: var(--text-primary);
+}
+
+.dark:root {
+  /* Couleurs de base - Bleu foncé professionnel */
+  --bg: #0a1628; /* Bleu foncé profond */
+  --fg: #e7edf7;
+  --accent: #3b82f6; /* Broadcast Blue */
+  --accent-hover: #2563eb;
+  --accent-light: #1e3a8a;
+  --neutral: #1e3a5f; /* Bleu foncé */
+  --surface: #0f1e35; /* Bleu foncé surface */
+  --surface-hover: #152640; /* Bleu foncé hover */
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.15);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.85);
+  
+  /* Cards - Bleu foncé */
+  --card-bg: linear-gradient(180deg, #0f1e35, #0a1628);
+  --card-bg-solid: #152640;
+  --card-text: #e7edf7;
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-hover: #1e3a5f;
+  
+  /* Texte - Contraste amélioré pour dark mode */
+  --muted: #94a3b8; /* slate-400 - lisible sur fond sombre */
+  --muted-light: #64748b; /* slate-500 */
+  --text-primary: #f1f5f9; /* slate-100 - contraste maximum */
+  --text-secondary: #e2e8f0; /* slate-200 - meilleur contraste */
+  --text-error: #fca5a5; /* red-400 - erreurs de validation sur sombre */
+  --border-error: #f87171; /* red-400 - bordures en erreur sur sombre */
+  
+  /* Grille - Bleu foncé */
+  --grid-line: rgba(255,255,255,0.06);
+  --program-accent: #ffd84d;
+  --grid-surface: linear-gradient(150deg, rgba(15, 30, 53, 0.95) 0%, rgba(10, 22, 40, 0.93) 52%, rgba(8, 18, 35, 0.97) 100%);
+  --grid-shadow: 0 40px 88px -52px rgba(0, 0, 0, 0.85);
+  --grid-card: rgba(15, 30, 53, 0.85);
+  --grid-card-border: rgba(100, 150, 200, 0.2);
+  --grid-card-hover: rgba(21, 38, 64, 0.95);
+  --grid-hour-bg: rgba(100, 150, 200, 0.12);
+  --grid-hour-border: rgba(100, 150, 200, 0.25);
+  --program-border: rgba(100, 150, 200, 0.25);
+  --program-glow: rgba(255, 216, 77, 0.35);
+  
+  /* Statuts - mêmes couleurs mais avec opacité adaptée pour dark */
+  --status-planned-bg: rgba(148, 163, 184, 0.15);
+  --status-planned-text: #94a3b8;
+  --status-confirmed-bg: rgba(59, 130, 246, 0.2);
+  --status-confirmed-text: #60a5fa;
+  --status-production-bg: rgba(245, 158, 11, 0.2);
+  --status-production-text: #fbbf24;
+  --status-ready-bg: rgba(34, 197, 94, 0.2);
+  --status-ready-text: #4ade80;
+  --status-onair-bg: rgba(225, 6, 0, 0.2); /* Utiliser --onair-red */
+  --status-onair-text: #E10600; /* Utiliser --onair-red */
+  --status-done-bg: rgba(16, 185, 129, 0.2);
+  --status-done-text: #34d399;
+  --status-canceled-bg: rgba(100, 116, 139, 0.15);
+  --status-canceled-text: #94a3b8;
+  
+  /* ===================================
+     🎚️ PALETTE BROADCAST PREMIUM (Dark)
+     =================================== */
+  /* Fonds broadcast */
+  --bg-main: #0B1220;
+  --bg-surface: #111A2E;
+  --bg-elevated: #16213A;
+  
+  /* Texte broadcast */
+  --text-primary-broadcast: #FFFFFF;
+  --text-secondary-broadcast: #B0B7C3;
+  --text-muted-broadcast: #7A8599;
+  
+  /* Lignes / grilles */
+  --border-subtle: #1F2A44;
+  
+  /* États broadcast */
+  --onair-red: #E10600;      /* STRICTEMENT ON AIR */
+  --warning-orange: #FF9F1C; /* T-2 min */
+  --success-green: #2ECC71;
+  
+  /* Slate cohérents pour dark */
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  @apply text-sm md:text-base;
+}
+
+/* ===================================
+   🟡 HEADER BROADCAST
+   =================================== */
+.header-broadcast {
+  background: linear-gradient(90deg, #0b1220 0%, #0b1220 55%, var(--accent) 100%);
+  color: white;
+}
+.header-blur { backdrop-filter: saturate(140%) blur(8px); }
+
+/* ===================================
+   🔘 BUTTONS - Design System Cohérent
+   =================================== */
+.btn { 
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-xl border font-medium transition focus:ring-2 active:scale-95;
+}
+.btn:focus {
+  box-shadow: 0 0 0 3px rgb(242 183 5 / 0.4);
+}
+
+.btn-outline { 
+  @apply border font-medium transition duration-200 ease-in-out;
+  border-color: var(--border);
+  background: transparent;
+  color: var(--fg);
+}
+.btn-outline:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+}
+.btn-outline:focus {
+  box-shadow: 0 0 0 3px rgb(242 183 5 / 0.4);
+}
+
+.btn-sky { 
+  background: var(--accent);
+  color: #0f172a; /* Contraste élevé pour lisibilité */
+  border: none;
+  box-shadow: 0 2px 8px rgba(242,183,5,0.35);
+  font-weight: 600;
+}
+.btn-sky:hover { 
+  opacity: 0.9;
+  box-shadow: 0 4px 12px rgba(242,183,5,0.45);
+}
+
+.btn-danger { 
+  background: #dc2626; /* red-600 pour meilleur contraste */
+  color: white;
+  border: transparent;
+  font-weight: 600;
+}
+.btn-danger:hover { 
+  background: #b91c1c; /* red-700 */
+}
+
+.btn-sm { @apply text-sm py-1.5 px-3; }
+
+/* Classes utilitaires pour les couleurs dynamiques */
+.bg-card { background-color: var(--card-bg-solid); }
+.bg-surface { background-color: var(--surface); }
+.bg-surface-hover { background-color: var(--surface-hover); }
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-card { color: var(--card-text); }
+.text-muted { color: var(--muted); }
+.border-card { border-color: var(--card-border); }
+.border-default { border-color: var(--border); }
+
+/* ===================================
+   ✏️ INPUTS & TEXTAREAS
+   =================================== */
+.input { 
+  @apply bg-white/90 dark:bg-[var(--surface)] border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 outline-none text-sm w-full transition;
+}
+.input:focus { 
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgb(242 183 5 / 30%);
+}
+
+/* ===================================
+   🧭 LEGEND / CHIPS / PILLS
+   =================================== */
+.chip { 
+  @apply text-xs px-2 py-1 rounded-full border border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium;
+}
+.legend-bar { 
+  @apply sticky top-0 z-10 border-b border-slate-200 dark:border-slate-700 backdrop-blur;
+  background: rgba(255,255,255,0.85);
+}
+.dark .legend-bar { background: rgba(8,12,20,0.85); }
+
+.day-pill { 
+  @apply px-2 py-1 rounded-md border border-slate-300 text-sm font-medium bg-white/70 dark:bg-slate-800 transition;
+}
+.day-pill:hover, .day-pill.active {
+  background: var(--accent);
+  color: #111;
+  border-color: var(--accent);
+}
+
+/* ===================================
+   📺 GRID STRUCTURE (GrilleTV)
+   =================================== */
+.legacy-grid {
+  display: grid;
+  position: relative;
+  grid-template-columns: 110px repeat(19, minmax(88px, 1fr));
+  grid-auto-rows: 80px;
+  gap: 12px;
+  background: var(--grid-surface);
+  border-radius: 6px;
+  padding: 24px 24px 28px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: var(--grid-shadow);
+  overflow: hidden;
+  isolation: isolate;
+  align-items: stretch;
+  transition: background 280ms ease, border-color 280ms ease;
+}
+.legacy-grid::before {
+  content: '';
+  position: absolute;
+  inset: -40% -10%;
+  background:
+    radial-gradient(72% 120% at 12% 15%, rgba(242, 183, 5, 0.16) 0%, rgba(242, 183, 5, 0) 62%),
+    radial-gradient(90% 120% at 88% 12%, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0) 70%);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+.legacy-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 18%), linear-gradient(180deg, rgba(15,23,42,0.08) 78%, rgba(15,23,42,0.16) 100%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: 0;
+}
+.dark .legacy-grid {
+  border-color: rgba(148, 163, 184, 0.24);
+}
+.dark .legacy-grid::before {
+  background:
+    radial-gradient(80% 120% at 8% 18%, rgba(255, 216, 77, 0.16) 0%, rgba(255, 216, 77, 0) 70%),
+    radial-gradient(90% 140% at 90% 8%, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0) 80%);
+}
+.dark .legacy-grid::after {
+  background: linear-gradient(180deg, rgba(8,14,27,0.45) 0%, rgba(8,14,27,0) 22%), linear-gradient(180deg, rgba(0,0,0,0) 70%, rgba(0,0,0,0.45) 100%);
+  mix-blend-mode: normal;
+}
+.legacy-grid > div:not(.week-agenda-program-card) {
+  background: var(--grid-card);
+  border: 1px solid var(--grid-card-border);
+  border-radius: 4px;
+  padding: 0;
+  min-height: 60px;
+  position: relative;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.28);
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 160ms ease, background 220ms ease;
+  backdrop-filter: saturate(140%) blur(12px);
+  z-index: 1;
+}
+.dark .legacy-grid > div:not(.week-agenda-program-card) {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.hour {
+  background: var(--grid-hour-bg);
+  border: 1px solid var(--grid-hour-border);
+  border-radius: 4px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace; /* Broadcast monospace */
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: right;
+  padding: 18px 16px 18px 12px;
+  letter-spacing: 0.05em; /* Augmenté pour monospace */
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums; /* Alignement vertical strict */
+  position: sticky;
+  left: 0;
+  z-index: 20;
+  box-shadow: inset -1px 0 0 rgba(148, 163, 184, 0.12);
+}
+.cell { 
+  cursor: pointer;
+  background: var(--grid-card);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: background 220ms ease, box-shadow 220ms ease, transform 160ms ease, border-color 220ms ease;
+}
+.cell:hover {
+  background: var(--grid-card-hover);
+  border-color: var(--accent);
+  box-shadow: 0 16px 34px -26px rgba(15, 23, 42, 0.65), 0 0 0 2px rgba(242, 183, 5, 0.2);
+  transform: translateY(-2px); /* Moins prononcé pour style broadcast */
+}
+
+/* Programme Cards */
+.program {
+  position: absolute;
+  inset: 12px;
+  border-radius: 4px;
+  padding: 12px 14px;
+  overflow: hidden;
+  color: var(--card-text);
+  background: var(--card-bg);
+  border: 1px solid var(--program-border);
+  box-shadow: 0 18px 38px -24px rgba(2, 6, 23, 0.42);
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 140ms ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: saturate(150%) blur(6px);
+}
+.program:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 24px 48px -24px rgba(2, 6, 23, 0.6), 0 0 0 2px var(--accent);
+  border-color: var(--accent);
+}
+
+/* Hover désactivé pour ON AIR */
+.program.program-onair:hover {
+  transform: none;
+  box-shadow: 0 0 40px rgba(225, 6, 0, 0.9) !important;
+}
+.program:focus-visible {
+  outline: 3px solid rgba(242, 183, 5, 0.4);
+  outline-offset: 3px;
+}
+.program strong {
+  font-weight: 700;
+  color: var(--program-accent);
+  font-size: 1rem;
+  text-transform: uppercase; /* Broadcast style */
+  letter-spacing: 0.02em;
+}
+.program .chip {
+  @apply border-none bg-black/10 text-[var(--card-text)];
+}
+
+/* Left accent stripe for program cards */
+.program::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  background: linear-gradient(180deg, var(--program-accent), color-mix(in srgb, var(--program-accent) 60%, black 10%));
+  opacity: 0.9;
+}
+.program::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 140% at 100% 0%, var(--program-glow) 0%, transparent 65%);
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* small meta row inside program */
+.program .meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.program .meta .duration {
+  background: color-mix(in srgb, var(--program-accent) 18%, transparent);
+  color: var(--program-accent);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* Mirror styles for older `.program-card` used in DayView */
+.program-card {
+  border-radius: 6px;
+  padding: 12px;
+  background: var(--card-bg);
+  color: var(--card-text);
+  box-shadow: 0 8px 18px rgba(2,6,23,0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.program-card:hover { transform: translateY(-6px); box-shadow: 0 16px 34px rgba(2,6,23,0.12); }
+
+/* === Styles inspired by Grid.jsx structure === */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+.day-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,252,0.85));
+  padding: 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dark .day-card { background: linear-gradient(180deg, rgba(8,12,20,0.7), rgba(6,8,14,0.6)); }
+
+.day-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.day-card-title { font-size: 1.05rem; font-weight: 700; }
+.day-card-meta { color: var(--muted); font-size: 0.85rem; }
+
+.conflict-chip { background: rgba(245, 158, 11, 0.12); color: #b45309; padding: 4px 8px; border-radius: 999px; font-weight: 600; }
+
+.day-column { min-height: 120px; max-height: 480px; overflow: auto; }
+
+.program-card__stripe {
+  width: 6px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, var(--program-accent), color-mix(in srgb, var(--program-accent) 60%, black 10%));
+}
+
+.time-block { color: var(--muted); }
+
+/* Responsive: stack days on narrow viewports */
+@media (max-width: 900px) {
+  .week-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .week-grid { grid-template-columns: 1fr; }
+}
+
+/* ===================================
+   🌒 DARK MODE REFINEMENTS
+   =================================== */
+.dark body {
+  background: var(--bg-main) !important;
+  background-attachment: fixed;
+  color: var(--fg);
+}
+.dark .program-card:not(.day-program-color-card) {
+  background: var(--bg-elevated) !important;
+  color: var(--text-primary-broadcast);
+}
+.dark .grid > div:not(.week-agenda-program-card) { 
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+}
+.week-agenda__timeline-grid > .week-agenda__slot-cell,
+.dark .week-agenda__timeline-grid > .week-agenda__slot-cell {
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  transition: none !important;
+}
+.dark .week-agenda__matrix {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+}
+.dark .week-agenda__slot {
+  background: var(--bg-elevated) !important;
+  border-color: var(--border-subtle) !important;
+  border-bottom: 2px solid var(--border-subtle) !important;
+}
+
+/* ===================================
+   🔠 TYPOGRAPHIE BROADCAST
+   =================================== */
+
+/* Titres broadcast - MAJUSCULES avec tracking */
+.broadcast-title,
+.broadcast-heading {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-primary-broadcast);
+}
+
+/* Heures / timelines - Monospace strict */
+.broadcast-time,
+.broadcast-hour {
+  font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-primary-broadcast);
+  font-variant-numeric: tabular-nums; /* Alignement vertical strict */
+}
+
+/* Contenu broadcast */
+.broadcast-text {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  color: var(--text-secondary-broadcast);
+  line-height: 1.5;
+}
+
+.broadcast-text-medium {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  color: var(--text-secondary-broadcast);
+}
+
+/* Tailles spécifiques pour lisibilité à distance */
+.broadcast-title-xl {
+  font-size: 2rem; /* 32px */
+  line-height: 1.2;
+}
+
+.broadcast-title-lg {
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.3;
+}
+
+.broadcast-title-md {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.4;
+}
+
+.broadcast-time-xl {
+  font-size: 1.75rem; /* 28px */
+}
+
+.broadcast-time-lg {
+  font-size: 1.5rem; /* 24px */
+}
+
+.broadcast-time-md {
+  font-size: 1.25rem; /* 20px */
+}
+
+/* Programme ON AIR - Style broadcast strict */
+.program-onair {
+  background-color: var(--onair-red) !important;
+  color: var(--text-primary-broadcast) !important;
+  border-color: var(--text-primary-broadcast) !important;
+  border-width: 4px !important;
+  box-shadow: 0 0 20px rgba(225, 6, 0, 0.4) !important;
+  z-index: 1000 !important; /* Toujours au-dessus */
+}
+
+/* Adaptation des programmes ON AIR dans la grille */
+.week-program.program-onair,
+.program.program-onair {
+  background: var(--onair-red) !important;
+  color: #FFFFFF !important;
+  border: 4px solid #FFFFFF !important;
+  box-shadow: 0 0 20px rgba(225, 6, 0, 0.4) !important;
+}
+
+.week-program.program-onair .week-program__title,
+.program.program-onair strong {
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+.week-program.program-onair .week-program__time {
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+/* ===================================
+   🏷️ STATUTS COHÉRENTS
+   =================================== */
+.status-planned {
+  background-color: var(--status-planned-bg);
+  color: var(--status-planned-text);
+  border-color: var(--status-planned-text);
+}
+
+.status-confirmed {
+  background-color: var(--status-confirmed-bg);
+  color: var(--status-confirmed-text);
+  border-color: var(--status-confirmed-text);
+}
+
+.status-production {
+  background-color: var(--status-production-bg);
+  color: var(--status-production-text);
+  border-color: var(--status-production-text);
+}
+
+.status-ready {
+  background-color: var(--status-ready-bg);
+  color: var(--status-ready-text);
+  border-color: var(--status-ready-text);
+}
+
+.status-onair {
+  background-color: var(--onair-red) !important;
+  color: var(--text-primary-broadcast) !important;
+  border-color: var(--text-primary-broadcast) !important;
+  border-width: 4px !important;
+  box-shadow: 0 0 30px rgba(225, 6, 0, 0.6) !important;
+}
+
+.status-done {
+  background-color: var(--status-done-bg);
+  color: var(--status-done-text);
+  border-color: var(--status-done-text);
+}
+
+.status-canceled {
+  background-color: var(--status-canceled-bg);
+  color: var(--status-canceled-text);
+  border-color: var(--status-canceled-text);
+}
+
+/* ===================================
+   💬 MISC / MODALS
+   =================================== */
+.modal .card { box-shadow: var(--shadow); }
+.modal-backdrop {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+}
+
+/* ===================================
+   ✨ HOVER & EFFETS
+   =================================== */
+.hover-glow:hover {
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* ===================================
+   📆 WEEK AGENDA VIEW - BROADCAST STYLE
+   =================================== */
+
+/* Grille plus respirante */
+.week-agenda__matrix {
+  gap: 16px !important; /* Au lieu de 12px */
+}
+
+/* Lignes horizontales mieux marquées */
+.week-agenda__slot {
+  border-bottom: 2px solid var(--border-subtle) !important;
+}
+
+/* Heures en monospace */
+.week-agenda__hour,
+.week-agenda__hour--label {
+  font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* ===================================
+   📆 WEEK AGENDA VIEW
+   =================================== */
+.week-agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.week-agenda__header {
+  display: grid;
+  grid-template-columns: 120px repeat(var(--week-days, 7), minmax(160px, 1fr));
+  gap: 12px;
+  align-items: end;
+  padding: 0 6px;
+}
+
+.week-agenda__corner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  padding-left: 4px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+.week-agenda__corner-range {
+  font-size: 0.7rem;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.week-agenda__day {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 255, 0.72));
+  border-radius: 4px;
+  padding: 12px 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 10px 20px -14px rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dark .week-agenda__day {
+  background: linear-gradient(160deg, var(--bg-surface), var(--bg-elevated));
+  border-color: var(--border-subtle);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 10px 24px -18px rgba(0, 0, 0, 0.7);
+}
+
+.week-agenda__day-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--fg);
+  text-transform: uppercase; /* Broadcast style */
+  letter-spacing: 0.04em;
+}
+
+.week-agenda__day-count {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.week-agenda__matrix {
+  position: relative;
+  display: grid;
+  grid-template-columns: 120px repeat(var(--week-days, 7), minmax(160px, 1fr));
+  grid-auto-rows: var(--slot-height, 54px);
+  gap: 16px; /* Plus respirant - broadcast style */
+  padding: 24px 24px 32px; /* Plus d'espace */
+  border-radius: 6px;
+  border: 2px solid var(--border-subtle); /* Bordure plus marquée */
+  background: var(--grid-surface);
+  box-shadow: var(--grid-shadow);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.week-agenda__matrix::before {
+  content: '';
+  position: absolute;
+  inset: -35% -8%;
+  background:
+    radial-gradient(80% 120% at 10% 14%, rgba(242, 183, 5, 0.14) 0%, rgba(242, 183, 5, 0) 66%),
+    radial-gradient(90% 120% at 85% 12%, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0) 70%);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.week-agenda__matrix::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 22%), linear-gradient(180deg, rgba(15, 23, 42, 0.1) 80%, rgba(15, 23, 42, 0.18) 100%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .week-agenda__matrix {
+  border-color: rgba(148, 163, 184, 0.28);
+}
+
+.dark .week-agenda__matrix::before {
+  background:
+    radial-gradient(90% 120% at 12% 20%, rgba(255, 216, 77, 0.18) 0%, rgba(255, 216, 77, 0) 70%),
+    radial-gradient(110% 140% at 88% 12%, rgba(56, 189, 248, 0.15) 0%, rgba(56, 189, 248, 0) 80%);
+}
+
+.dark .week-agenda__matrix::after {
+  background: linear-gradient(180deg, rgba(8, 14, 27, 0.55) 0%, rgba(8, 14, 27, 0) 25%), linear-gradient(180deg, rgba(0, 0, 0, 0) 72%, rgba(0, 0, 0, 0.48) 100%);
+  mix-blend-mode: normal;
+}
+
+.week-agenda__hour {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 18px;
+  font-size: 0.75rem;
+  color: rgba(148, 163, 184, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.week-agenda__hour--label {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.week-agenda__slot {
+  position: relative;
+  border-radius: 4px;
+  background: var(--grid-card);
+  border: 1px solid var(--grid-card-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  z-index: 1;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.week-agenda__slot--hour::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.06);
+}
+
+.week-agenda__slot--half {
+  opacity: 0.55;
+}
+
+.week-program {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 4px;
+  background: var(--program-background, var(--grid-card));
+  border: 1px solid var(--program-border, rgba(15, 23, 42, 0.1));
+  box-shadow: var(--program-shadow, 0 16px 36px -22px rgba(15, 23, 42, 0.55));
+  color: var(--card-text);
+  overflow: hidden;
+  z-index: 2;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.week-program::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(110% 140% at 100% 0%, var(--program-glow, rgba(245, 158, 11, 0.2)) 0%, transparent 68%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.week-program:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--program-shadow-hover, 0 26px 48px -26px rgba(15, 23, 42, 0.55));
+  border-color: var(--accent) !important;
+}
+
+/* Hover désactivé pour ON AIR (focus visuel permanent) */
+.week-program.program-onair:hover {
+  transform: none;
+  box-shadow: 0 0 40px rgba(225, 6, 0, 0.9) !important;
+}
+
+.week-program__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.week-program__time {
+  font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace; /* Broadcast monospace */
+  font-weight: 700;
+  color: var(--program-accent, var(--accent));
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.week-program__duration {
+  background: rgba(15, 23, 42, 0.08);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-weight: 600;
+}
+
+.week-program__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--card-text);
+  text-transform: uppercase; /* Broadcast style */
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
+.week-program__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.week-program__chip {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.week-program__description {
+  font-size: 0.75rem;
+  color: rgba(15, 23, 42, 0.7);
+  line-height: 1.4;
+}
+
+.dark .week-program__description {
+  color: rgba(226, 232, 240, 0.8);
+}
+
+.week-program--conflict {
+  position: relative;
+}
+
+.week-program--conflict::after {
+  content: 'Conflit';
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgba(248, 113, 113, 0.95);
+  background: rgba(248, 113, 113, 0.15);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+@media (max-width: 920px) {
+  .week-agenda__header,
+  .week-agenda__matrix {
+    grid-template-columns: 80px repeat(var(--week-days, 7), minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .week-agenda__header {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+  .week-agenda__corner {
+    grid-column: 1 / -1;
+    align-items: flex-start;
+    padding-bottom: 6px;
+  }
+  .week-agenda__matrix {
+    grid-template-columns: 80px repeat(3, minmax(140px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 30px;
+  }
+}
+
+/* ===================================
+   📱 MOBILE & TABLETTE - DESIGN BROADCAST
+   Styles selon spécification UI/UX mobile/tablette
+   =================================== */
+
+/* Safe area pour mobile (notch, etc.) */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Typographie mobile/tablette broadcast */
+.mobile-title {
+  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #F1F5F9;
+}
+
+.mobile-body {
+  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #F1F5F9;
+}
+
+.mobile-small {
+  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #94A3B8;
+}
+
+.mobile-time {
+  font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', 'Monaco', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #F1F5F9;
+}
+
+/* Typographie tablette (+20%) */
+@media (min-width: 768px) {
+  .tablet-title {
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #F1F5F9;
+  }
+
+  .tablet-body {
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #F1F5F9;
+  }
+
+  .tablet-small {
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #94A3B8;
+  }
+
+  .tablet-time {
+    font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', 'Monaco', monospace;
+    font-size: 17px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #F1F5F9;
+  }
+}
+
+/* Scroll mobile optimisé */
+.mobile-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Animation ON AIR pulse */
+@keyframes mobile-on-air-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(193, 18, 31, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(193, 18, 31, 0.8);
+  }
+}
+
+.mobile-on-air-pulse {
+  animation: mobile-on-air-pulse 2s ease-in-out infinite;
+}
+
+/* ===================================
+   🎛️ MODE UI RÉGIE ON AIR
+   Styles optimisés pour régie live
+   =================================== */
+
+/* Mode RÉGIE : Contraste élevé, lisibilité maximale */
+body[data-ui-mode="REGIE"] {
+  --regie-bg: #ffffff;
+  --regie-text: #000000;
+  --regie-border: #333333;
+  --regie-onair-bg: #ff0000;
+  --regie-onair-text: #ffffff;
+  --regie-time-size: 16px;
+  --regie-title-size: 15px;
+}
+
+body[data-ui-mode="REGIE"].dark {
+  --regie-bg: var(--bg-main);
+  --regie-text: var(--text-primary-broadcast);
+  --regie-border: var(--border-subtle);
+  --regie-onair-bg: var(--onair-red);
+  --regie-onair-text: var(--text-primary-broadcast);
+}
+
+/* Horaires en police monospace, taille augmentée */
+body[data-ui-mode="REGIE"] .regie-time {
+  font-family: 'JetBrains Mono', 'Roboto Mono', 'Courier New', 'Monaco', 'Menlo', monospace !important;
+  font-size: 2rem !important; /* 32px */
+  font-weight: 700 !important;
+  letter-spacing: 0.05em;
+  color: var(--regie-text) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Titres de programmes plus grands */
+body[data-ui-mode="REGIE"] .regie-title {
+  font-size: 2.5rem !important; /* 40px */
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2 !important;
+}
+
+/* Programme ON AIR : mise en évidence maximale */
+body[data-ui-mode="REGIE"] .program-onair {
+  background: var(--onair-red) !important;
+  color: var(--text-primary-broadcast) !important;
+  border: 4px solid var(--text-primary-broadcast) !important;
+  box-shadow: 0 0 30px rgba(225, 6, 0, 0.6) !important;
+  animation: broadcast-pulse 2s ease-in-out infinite !important;
+  z-index: 1000 !important;
+}
+
+@keyframes regie-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+  }
+}
+
+/* Animation pulse broadcast pour ON AIR */
+@keyframes broadcast-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(225, 6, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(225, 6, 0, 0.9);
+  }
+}
+
+/* Désactivation des actions non critiques en mode RÉGIE */
+body[data-ui-mode="REGIE"] .action-non-critical {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Scroll automatique vers le programme ON AIR */
+body[data-ui-mode="REGIE"] .program-onair {
+  scroll-margin: 100px;
+}
+
+/* Amélioration du contraste général */
+body[data-ui-mode="REGIE"] .week-agenda-modern {
+  background: var(--regie-bg) !important;
+  color: var(--regie-text) !important;
+}
+
+body[data-ui-mode="REGIE"] .week-agenda-modern * {
+  border-color: var(--regie-border) !important;
+}
+
+/* Mode DIRECTION : Statistiques visibles */
+body[data-ui-mode="DIRECTION"] .stats-panel {
+  display: block !important;
+}
+
+body[data-ui-mode="DIRECTION"] .stats-item {
+  font-size: 14px;
+  padding: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+/* ===================================
+   📱 HEADER - Scroll horizontal invisible
+   =================================== */
+header > div > div {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+header > div > div::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}

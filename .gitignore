@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+frontend/dist/
+frontend/.vite/
+backend/dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Temporary
+deployment-temp/
+*.zip
+
+# Ancien stockage JSON, remplacé par PostgreSQL. Contient des empreintes de
+# mots de passe (backend/data/v3/users.json) : ne doit jamais être versionné.
+backend/data/
+
+# Sorties générées
+backend/epg-output/
+frontend/test-results/
+frontend/e2e-screenshots/

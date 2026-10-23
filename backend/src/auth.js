@@ -1,0 +1,8 @@
+import jwt from 'jsonwebtoken';
+export function ensureAuth(req, res, next){
+  const hdr = req.headers.authorization || '';
+  const token = hdr.startsWith('Bearer ')? hdr.slice(7): null;
+  if(!token) return res.status(401).json({ error:'Missing token' });
+  try{ req.user = jwt.verify(token, process.env.JWT_SECRET || 'dev'); next(); }
+  catch(e){ res.status(401).json({ error:'Invalid token' }) }
+}

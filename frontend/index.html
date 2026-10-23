@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Application professionnelle de gestion de grilles TV pour Broadcast SN+" />
+    <meta name="theme-color" content="#0B1220" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="GrilleTV Pro" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>GrilleTV Pro</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <style>
+      /* Prévenir le FOUC (Flash of Unstyled Content) */
+      body.app-shell {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: #0f172a;
+        color: #f1f5f9;
+        overflow: hidden;
+      }
+      #root {
+        width: 100vw;
+        height: 100vh;
+      }
+      /* Masquer le contenu jusqu'à ce que React soit prêt */
+      body.app-shell:not(.loaded) #root {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body class="app-shell">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Marquer le body comme chargé une fois que le script est exécuté
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add('loaded');
+      });
+    </script>
+  </body>
+</html>

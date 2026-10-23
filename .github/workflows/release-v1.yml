@@ -1,0 +1,122 @@
+name: Release V1.0.0
+
+on:
+  push:
+    tags:
+      - 'v1.*'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    # PostgreSQL service configuration (using Docker service, not setup-postgresql action)
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      # Frontend
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Check Bundle Size
+        run: |
+          set -e
+          if [ ! -d "frontend/dist/assets" ]; then
+            echo "❌ Error: frontend/dist/assets directory does not exist"
+            echo "Please ensure the frontend build completed successfully"
+            exit 1
+          fi
+          cd frontend/dist/assets
+          if ! ls index-*.js 1> /dev/null 2>&1; then
+            echo "❌ Error: No index-*.js bundle file found in frontend/dist/assets"
+            echo "Please ensure the frontend build generated the bundle files"
+            exit 1
+          fi
+          BUNDLE_SIZE=$(gzip -c index-*.js | wc -c)
+          BUNDLE_SIZE_KB=$((BUNDLE_SIZE / 1024))
+          echo "Bundle size (gzip): ${BUNDLE_SIZE_KB} KB"
+          if [ $BUNDLE_SIZE_KB -gt 400 ]; then
+            echo "⚠️ Bundle size exceeds 400 KB"
+            exit 1
+          fi
+
+      - name: Run Frontend Tests
+        run: |
+          cd frontend
+          npm test -- --run
+
+      - name: Frontend Test Coverage
+        run: |
+          cd frontend
+          npm run test:coverage
+        continue-on-error: true
+
+      # Backend
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: Run Prisma Migrations
+        run: |
+          cd backend
+          npx prisma migrate deploy
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
+
+      - name: Build Backend
+        run: |
+          cd backend
+          npm run build
+
+      - name: Generate Prisma Client
+        run: |
+          cd backend
+          npx prisma generate
+
+  create-release:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: V1.0.0 - Produit Industriel
+          body_path: docs/RELEASE_NOTES.md
+          draft: false
+          prerelease: false
+          tag_name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

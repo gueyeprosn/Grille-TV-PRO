@@ -1,0 +1,14 @@
+---
+description: Maintenance des fichiers Markdown du projet
+globs: '**/*.md'
+alwaysApply: false
+---
+
+# Documentation maintenue
+
+- Exclure `node_modules`, les dépendances tierces, les sorties compilées et les archives générées.
+- Vérifier le code et `package.json` avant d’affirmer un comportement, une commande, un rôle, une version ou une métrique.
+- Mettre à jour le guide le plus proche du changement et le README racine si le parcours d’installation ou une capacité majeure évolue.
+- Marquer explicitement comme historiques les résultats de tests/builds et les versions qui ne sont plus vérifiés.
+- Ne jamais inscrire de secret, mot de passe, jeton, donnée personnelle ou donnée métier réelle dans un exemple.
+- Garder les documents produit et les consignes utilisateur en français; utiliser des titres précis et valider les liens locaux modifiés.

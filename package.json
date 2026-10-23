@@ -1,0 +1,32 @@
+{
+  "name": "grilletv-pro-v4",
+  "version": "4.0.0",
+  "description": "Système de gestion de grille de programmes TV professionnel avec Broadcast Manager",
+  "private": true,
+  "scripts": {
+    "build": "./build.sh",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "install:all": "cd frontend && npm install && cd ../backend && npm install",
+    "dev": "./start.sh",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm run dev",
+    "preview": "cd frontend && npm run preview",
+    "check": "cd frontend && npx tsc --noEmit"
+  },
+  "keywords": [
+    "grille",
+    "tv",
+    "broadcast",
+    "programme",
+    "planification",
+    "ontheair"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
+

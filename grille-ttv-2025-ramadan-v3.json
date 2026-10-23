@@ -1,0 +1,183 @@
+{
+    "grid": {
+      "id": "grid-ttv-2025-ramadan",
+      "channelId": "touba-tv",
+      "name": "Grille Touba TV 2025 – Ramadan",
+      "type": "special",
+      "startDate": "2025-03-01",
+      "endDate": "2025-04-05",
+      "timezone": "Africa/Dakar",
+      "status": "published",
+      "version": 1,
+      "createdBy": "admin"
+    },
+    "programs": [
+      {
+        "id": "r-0400-quran",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Lecture Saint Coran – Spécial Ramadan",
+        "categoryId": "religion",
+        "type": "PAD",
+        "days": [0,1,2,3,4,5,6],
+        "startTime": "04:00",
+        "endTime": "05:00",
+        "durationMin": 60,
+        "opStatus": "READY",
+        "adsRequired": false
+      },
+      {
+        "id": "r-0500-khassida",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Khassida & Invocations du Fajr",
+        "categoryId": "religion",
+        "type": "PAD",
+        "days": [0,1,2,3,4,5,6],
+        "startTime": "05:00",
+        "endTime": "05:45",
+        "durationMin": 45,
+        "opStatus": "READY",
+        "adsRequired": false
+      },
+      {
+        "id": "r-0545-sermon",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Sermon du Jour – Ramadan",
+        "categoryId": "religion",
+        "type": "PAD",
+        "days": [0,1,2,3,4,5,6],
+        "startTime": "05:45",
+        "endTime": "06:00",
+        "durationMin": 15,
+        "opStatus": "READY",
+        "adsRequired": false
+      },
+  
+      {
+        "id": "r-0700-jt-ramadan",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Journal de Touba – Édition Ramadan",
+        "categoryId": "news",
+        "type": "LIVE",
+        "days": [0,1,2,3,4,5,6],
+        "startTime": "07:00",
+        "endTime": "07:30",
+        "durationMin": 30,
+        "opStatus": "CONFIRMED",
+        "adsRequired": false
+      },
+  
+      {
+        "id": "r-0730-ads",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Fenêtre commerciale matinale Ramadan",
+        "categoryId": "advertising",
+        "type": "ADS",
+        "days": [1,2,3,4,5],
+        "startTime": "07:30",
+        "endTime": "07:35",
+        "durationMin": 5,
+        "opStatus": "PLANNED",
+        "adsRequired": true,
+        "commercialNotes": "Annonceurs Ramadan – fallback BA_RAMADAN"
+      },
+  
+      {
+        "id": "r-1600-tafsir",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Tafsir du Coran – Spécial Ramadan",
+        "categoryId": "religion",
+        "type": "LIVE",
+        "days": [1,3,5],
+        "startTime": "16:00",
+        "endTime": "17:30",
+        "durationMin": 90,
+        "opStatus": "IN_PRODUCTION",
+        "adsRequired": false
+      },
+  
+      {
+        "id": "r-1730-jt-soir",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Journal de Touba – Soir Ramadan",
+        "categoryId": "news",
+        "type": "LIVE",
+        "days": [0,1,2,3,4,5,6],
+        "startTime": "17:30",
+        "endTime": "18:00",
+        "durationMin": 30,
+        "opStatus": "CONFIRMED",
+        "adsRequired": false
+      },
+  
+      {
+        "id": "r-1830-iftar",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Iftar & Invocations en Direct",
+        "categoryId": "religion",
+        "type": "LIVE",
+        "days": [0,1,2,3,4,5,6],
+        "startTime": "18:30",
+        "endTime": "19:00",
+        "durationMin": 30,
+        "opStatus": "CONFIRMED",
+        "adsRequired": false
+      },
+  
+      {
+        "id": "r-2000-dialogue-ramadan",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Dialogue Ramadan",
+        "categoryId": "religion",
+        "type": "LIVE",
+        "days": [2,4],
+        "startTime": "20:00",
+        "endTime": "21:30",
+        "durationMin": 90,
+        "opStatus": "IN_PRODUCTION",
+        "adsRequired": false
+      },
+  
+      {
+        "id": "r-2130-ads",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Fenêtre commerciale soirée Ramadan",
+        "categoryId": "advertising",
+        "type": "ADS",
+        "days": [2,4],
+        "startTime": "21:30",
+        "endTime": "21:35",
+        "durationMin": 5,
+        "opStatus": "PLANNED",
+        "adsRequired": true,
+        "commercialNotes": "Sponsors Ramadan – priorité élevée"
+      },
+  
+      {
+        "id": "r-2200-qiyam",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Qiyam & Prières nocturnes",
+        "categoryId": "religion",
+        "type": "PAD",
+        "days": [0,1,2,3,4,5,6],
+        "startTime": "22:00",
+        "endTime": "23:30",
+        "durationMin": 90,
+        "opStatus": "READY",
+        "adsRequired": false
+      },
+  
+      {
+        "id": "r-2330-replay",
+        "gridId": "grid-ttv-2025-ramadan",
+        "title": "Replay Ramadan",
+        "categoryId": "replay",
+        "type": "PAD",
+        "days": [0,1,2,3,4,5,6],
+        "startTime": "23:30",
+        "endTime": "04:00",
+        "durationMin": 270,
+        "opStatus": "READY",
+        "adsRequired": false
+      }
+    ]
+  }

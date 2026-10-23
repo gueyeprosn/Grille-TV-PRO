@@ -1,0 +1,12 @@
+---
+description: Parcours et retours d’état de l’export PDF dans l’interface
+globs: frontend/src/components/AppModernV3.tsx
+alwaysApply: false
+---
+
+# Parcours d’export dans l’interface
+
+- Envoyer au générateur les programmes de la grille et le jour/mode actuellement sélectionnés.
+- Attendre la fin de la génération avant d’afficher une confirmation de succès; afficher une erreur compréhensible en cas d’échec.
+- Garder le PDF hebdomadaire et le PDF journalier comme actions distinctes et conserver leur disponibilité selon la vue active.
+- Documenter les changements visibles dans le README et le guide Régie.

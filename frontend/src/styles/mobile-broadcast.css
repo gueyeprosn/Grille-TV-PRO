@@ -1,0 +1,312 @@
+/**
+ * 🎨 Design System Mobile & Tablette Broadcast
+ * Cohérent avec V1 Desktop
+ */
+
+:root {
+  /* Couleurs Broadcast Mobile */
+  --mobile-bg-primary: #0B1220; /* Bleu nuit */
+  --mobile-bg-surface: #0F172A; /* Surface */
+  --mobile-on-air: #C1121F; /* Rouge ON AIR */
+  --mobile-text-primary: #F1F5F9; /* Blanc/Gris clair */
+  --mobile-text-secondary: #E2E8F0;
+  --mobile-text-muted: #94A3B8;
+  --mobile-border: rgba(148, 163, 184, 0.2);
+  
+  /* Alertes */
+  --mobile-warning: #F59E0B; /* 🟠 Warning */
+  --mobile-critical: #EF4444; /* 🔴 Critical */
+  
+  /* Typographie Mobile */
+  --mobile-font-title: 16px; /* Min mobile */
+  --mobile-font-time: 14px; /* Heures monospace */
+  --mobile-font-body: 14px;
+  --mobile-font-small: 12px;
+  
+  /* Tablette : +20% */
+  --tablet-font-title: 19.2px;
+  --tablet-font-time: 16.8px;
+  --tablet-font-body: 16.8px;
+  --tablet-font-small: 14.4px;
+  
+  /* Zones tactiles */
+  --mobile-touch-target: 44px; /* Minimum iOS/Android */
+  --mobile-spacing: 16px;
+  --mobile-spacing-sm: 12px;
+  --mobile-spacing-lg: 24px;
+}
+
+/* ===================================
+   📱 MOBILE BASE STYLES
+   =================================== */
+
+@media (max-width: 767px) {
+  /* Safe area pour iPhone notch */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Typographie mobile */
+  .mobile-title {
+    font-size: var(--mobile-font-title);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--mobile-text-primary);
+  }
+  
+  .mobile-time {
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: var(--mobile-font-time);
+    font-weight: 600;
+    color: var(--mobile-text-primary);
+  }
+  
+  .mobile-body {
+    font-size: var(--mobile-font-body);
+    line-height: 1.5;
+    color: var(--mobile-text-secondary);
+  }
+  
+  .mobile-small {
+    font-size: var(--mobile-font-small);
+    color: var(--mobile-text-muted);
+  }
+  
+  /* ON AIR Badge */
+  .mobile-on-air-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--mobile-on-air);
+    color: white;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Programme Card Mobile */
+  .mobile-program-card {
+    background: var(--mobile-bg-surface);
+    border: 1px solid var(--mobile-border);
+    border-radius: 6px;
+    padding: var(--mobile-spacing);
+    margin-bottom: var(--mobile-spacing-sm);
+    transition: all 0.2s ease;
+  }
+  
+  .mobile-program-card:active {
+    transform: scale(0.98);
+    background: rgba(148, 163, 184, 0.1);
+  }
+  
+  .mobile-program-card.on-air {
+    background: rgba(193, 18, 31, 0.15);
+    border-color: var(--mobile-on-air);
+    border-width: 2px;
+  }
+  
+  /* Timeline Mobile */
+  .mobile-timeline {
+    height: 4px;
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: var(--mobile-spacing-sm) 0;
+  }
+  
+  .mobile-timeline-progress {
+    height: 100%;
+    background: var(--mobile-on-air);
+    transition: width 1s linear;
+  }
+  
+  /* Boutons tactiles */
+  .mobile-button {
+    min-height: var(--mobile-touch-target);
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: var(--mobile-font-body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+  
+  .mobile-button:active {
+    transform: scale(0.96);
+  }
+  
+  /* Scroll vertical optimisé */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  /* Masquer éléments desktop */
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* ===================================
+   📲 TABLETTE STYLES
+   =================================== */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Typographie tablette (+20%) */
+  .tablet-title {
+    font-size: var(--tablet-font-title);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  
+  .tablet-time {
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: var(--tablet-font-time);
+    font-weight: 600;
+  }
+  
+  .tablet-body {
+    font-size: var(--tablet-font-body);
+    line-height: 1.5;
+  }
+  
+  /* Split View Layout */
+  .tablet-split-view {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: var(--mobile-spacing);
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .tablet-split-main {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: var(--mobile-spacing-lg);
+  }
+  
+  .tablet-split-sidebar {
+    background: var(--mobile-bg-surface);
+    border-left: 1px solid var(--mobile-border);
+    padding: var(--mobile-spacing-lg);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Régie Légère Tablette */
+  .tablet-regie-view {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mobile-spacing-lg);
+    height: 100%;
+  }
+  
+  .tablet-regie-on-air {
+    background: rgba(193, 18, 31, 0.15);
+    border: 2px solid var(--mobile-on-air);
+    border-radius: 4px;
+    padding: var(--mobile-spacing-lg);
+  }
+  
+  /* Masquer éléments mobile */
+  .hide-tablet {
+    display: none !important;
+  }
+}
+
+/* ===================================
+   🎯 ÉTATS ON AIR
+   =================================== */
+
+.mobile-on-air-pulse {
+  animation: pulse-on-air 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-on-air {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ===================================
+   🔄 TRANSITIONS
+   =================================== */
+
+.mobile-transition {
+  transition: all 0.2s ease;
+}
+
+.mobile-swipe-transition {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================================
+   📊 BADGES & INDICATEURS
+   =================================== */
+
+.mobile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.mobile-badge-ramadan {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+}
+
+.mobile-badge-event {
+  background: rgba(139, 92, 246, 0.2);
+  color: #8B5CF6;
+}
+
+.mobile-badge-commercial {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22C55E;
+}
+
+/* ===================================
+   🎨 COULEURS BROADCAST
+   =================================== */
+
+.dark .mobile-bg-primary {
+  background: var(--mobile-bg-primary);
+}
+
+.dark .mobile-bg-surface {
+  background: var(--mobile-bg-surface);
+}
+
+/* ===================================
+   📱 SWIPE GESTURES
+   =================================== */
+
+.mobile-swipe-container {
+  touch-action: pan-y;
+  overflow-x: hidden;
+}
+
+.mobile-swipe-item {
+  touch-action: pan-x;
+  user-select: none;
+}
+

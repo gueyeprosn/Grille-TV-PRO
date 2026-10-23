@@ -1,0 +1,13 @@
+---
+description: Préservation et vérification des exports PDF GrilleTV Pro
+globs: frontend/src/legacy/lib/pdf.js
+alwaysApply: false
+---
+
+# Exports PDF
+
+- Préserver les données et leur ordre métier; garder les formats hebdomadaire et journalier distincts.
+- Conserver les modes STANDARD, REGIE et DIRECTION; rendre les libellés de mode et le filigrane Régie explicites.
+- Pour toute modification de mise en page, générer un PDF avec des données synthétiques et inspecter les pages rendues, dont un document multipage et un état vide.
+- Vérifier titres longs, pagination, pied de page, caractères français et lisibilité imprimée. Ne pas utiliser de données métier réelles pour les aperçus.
+- Mettre à jour README et guide Régie si le contenu ou le parcours d’export visible change.

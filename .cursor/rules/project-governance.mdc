@@ -1,0 +1,14 @@
+---
+description: Gouvernance et sécurité du dépôt GrilleTV Pro
+alwaysApply: true
+---
+
+# Gouvernance du projet
+
+- Lire `AGENTS.md` à la racine et le `AGENTS.md` le plus proche avant de modifier le projet. Il fait autorité pour Codex.
+- Préserver l’architecture locale, PostgreSQL, les rôles et permissions; ne pas introduire de service cloud ni de contournement d’authentification.
+- Ne pas écraser de données métier, réinitialiser une base, supprimer des fichiers métier ou lancer une migration destructive sans demande explicite.
+- Modifier les sources maintenues, pas les artefacts compilés; suivre les consignes de migration Prisma.
+- Les messages utilisateur sont en français. Garder les changements ciblés et accessibles.
+- Ne pas prétendre qu’un test, un build ou une vérification a réussi sans résultat réel. Suivre la section Vérification d’`AGENTS.md`.
+- Mettre à jour la documentation maintenue quand un changement affecte les commandes, parcours, permissions, exports ou procédures.
