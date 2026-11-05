@@ -48,7 +48,7 @@ export function mapOpStatusFromFrontend(status: string): OpStatus {
 /**
  * Convertit une heure "HH:MM" en minutes depuis minuit
  */
-function timeToMinutes(time: string): number {
+export function timeToMinutes(time: string): number {
   const parts = time.split(':')
   const hours = parts[0] ? Number(parts[0]) : 0
   const minutes = parts[1] ? Number(parts[1]) : 0
@@ -58,12 +58,12 @@ function timeToMinutes(time: string): number {
 /**
  * Vérifie si un jour est dans la liste des jours de diffusion
  */
-function isDayInSchedule(dayIndex: number, days?: number[]): boolean {
+export function isDayInSchedule(dayIndex: number, days?: number[]): boolean {
   if (!days || days.length === 0) return true // Si pas de jours spécifiés, considérer tous les jours
   return days.includes(dayIndex)
 }
 
-function getBroadcastTime(date: Date, timezone: string) {
+export function getBroadcastTime(date: Date, timezone: string) {
   const parts = new Intl.DateTimeFormat('en-US', {
     timeZone: timezone,
     weekday: 'short',

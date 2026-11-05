@@ -43,6 +43,7 @@ import {
 import { parsePagination, createPaginatedResult, getSkip } from './lib/pagination.js'
 import { getCached, invalidateCache } from './lib/cache.js'
 import { calculateOnAirStatusForPrograms, mapOpStatusToFrontend } from './lib/onAirCalculator.js'
+import { selectOnAirProgram, selectNextProgram, selectTodayPrograms, toFrontendProgram, type ProgrammePrisma } from './lib/broadcast-selection.js'
 
 // Helper pour valider les paramètres
 function requireParam(param: string | undefined, name: string): string {
@@ -1010,44 +1011,53 @@ router.put('/shiftlogs/:id', generalLimiter, writeLimiter, ensureAuth, requirePe
 // ============================================
 // BROADCAST (Now/Next/Today)
 // ============================================
-router.get('/broadcast/now', generalLimiter, ensureAuth, requirePermission('program', 'read'), async (req: Request, res: Response) => {
-  try {
-    const now = new Date()
-    const programs = await store.getPrograms()
-    const current = programs.find((p: any) => {
-      return p.opStatus === 'ON_AIR'
-    })
-    res.json(current || null)
-  } catch (error: any) {
-    console.error('Erreur broadcast now:', error)
-    res.status(500).json({ error: error.message })
-  }
-})
+// Les routes d'antenne portent sur UNE grille. À défaut de paramètre, on prend
+// la grille par défaut, puis celle désignée par OFFICIAL_GRID_ID. Sans grille
+// résolue, on répond vide plutôt que de mélanger les programmes de plusieurs
+// grilles, ce que faisait l'implémentation précédente.
+async function resolveBroadcastGridId(req: Request): Promise<string | null> {
+  const demande = typeof req.query.gridId === 'string' ? req.query.gridId.trim() : ''
+  if (demande) return demande
 
-router.get('/broadcast/next', generalLimiter, ensureAuth, requirePermission('program', 'read'), async (req: Request, res: Response) => {
-  try {
-    const programs = await store.getPrograms()
-    const next = programs
-      .filter((p: any) => ['CONFIRMED', 'READY', 'IN_PRODUCTION'].includes(p.opStatus))
-      .sort((a: any, b: any) => a.startTime?.localeCompare(b.startTime) || 0)[0]
-    res.json(next || null)
-  } catch (error: any) {
-    console.error('Erreur broadcast next:', error)
-    res.status(500).json({ error: error.message })
-  }
-})
+  const parDefaut = await store.getDefaultGrid()
+  if (parDefaut) return parDefaut.id
 
-router.get('/broadcast/today', generalLimiter, ensureAuth, requirePermission('program', 'read'), async (req: Request, res: Response) => {
-  try {
-    const today = new Date().toISOString().split('T')[0]
-    const programs = await store.getPrograms()
-    // Filtrer par jour - logique simplifiée
-    res.json(programs.slice(0, 20)) // Limite pour l'exemple
-  } catch (error: any) {
-    console.error('Erreur broadcast today:', error)
-    res.status(500).json({ error: error.message })
+  const officielle = process.env.OFFICIAL_GRID_ID?.trim()
+  if (officielle) {
+    const grille = await prisma.grid.findUnique({ where: { id: officielle }, select: { id: true } })
+    if (grille) return grille.id
   }
-})
+  return null
+}
+
+async function programmesDeLaGrille(gridId: string | null) {
+  if (!gridId) return []
+  return (await store.getPrograms(gridId)) as unknown as ProgrammePrisma[]
+}
+
+router.get('/broadcast/now', generalLimiter, ensureAuth, requirePermission('program', 'read'), asyncHandler(async (req: Request, res: Response) => {
+  const gridId = await resolveBroadcastGridId(req)
+  const programs = await programmesDeLaGrille(gridId)
+  const enAntenne = selectOnAirProgram(programs)
+
+  res.json({ gridId, program: enAntenne ? toFrontendProgram(enAntenne) : null })
+}))
+
+router.get('/broadcast/next', generalLimiter, ensureAuth, requirePermission('program', 'read'), asyncHandler(async (req: Request, res: Response) => {
+  const gridId = await resolveBroadcastGridId(req)
+  const programs = await programmesDeLaGrille(gridId)
+  const suivant = selectNextProgram(programs)
+
+  res.json({ gridId, program: suivant ? toFrontendProgram(suivant) : null })
+}))
+
+router.get('/broadcast/today', generalLimiter, ensureAuth, requirePermission('program', 'read'), asyncHandler(async (req: Request, res: Response) => {
+  const gridId = await resolveBroadcastGridId(req)
+  const programs = await programmesDeLaGrille(gridId)
+  const duJour = selectTodayPrograms(programs)
+
+  res.json({ gridId, programs: duJour.map(toFrontendProgram) })
+}))
 
 // ============================================
 // NOTIFICATION RULES
