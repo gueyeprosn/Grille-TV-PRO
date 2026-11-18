@@ -50,9 +50,9 @@ interface CategoryStyles {
 interface DailyProgramCardProps {
   occurrence: DisplayOccurrence
   theme: ThemeData
-  onEdit: (program: Program) => void
-  onDelete: (id: string) => void
-  onDuplicate: (id: string) => void
+  onEdit?: (program: Program) => void
+  onDelete?: (id: string) => void
+  onDuplicate?: (id: string) => void
   isConflict: boolean
 }
 
@@ -106,7 +106,7 @@ const DailyProgramCard: React.FC<DailyProgramCardProps> = ({
       onDoubleClick={(event) => {
         const target = event.target as HTMLElement
         if (target.closest('button, a, input, select, textarea')) return
-        onEdit(program)
+        onEdit?.(program)
       }}
     >
       <div className="flex items-start justify-between gap-3">
@@ -150,15 +150,15 @@ const DailyProgramCard: React.FC<DailyProgramCardProps> = ({
       )}
 
       <div className="flex flex-wrap gap-2 text-xs w-full mt-3">
-        <button className="btn btn-sm btn-outline" onClick={() => onEdit(program)}>
+        {onEdit && <button className="btn btn-sm btn-outline" onClick={() => onEdit(program)}>
           Modifier
-        </button>
-        <button className="btn btn-sm btn-amber" onClick={() => onDuplicate(program.id)}>
+        </button>}
+        {onDuplicate && <button className="btn btn-sm btn-amber" onClick={() => onDuplicate(program.id)}>
           Dupliquer
-        </button>
-        <button className="btn btn-sm btn-danger" onClick={() => onDelete(program.id)}>
+        </button>}
+        {onDelete && <button className="btn btn-sm btn-danger" onClick={() => onDelete(program.id)}>
           Supprimer
-        </button>
+        </button>}
       </div>
     </div>
   )
@@ -170,9 +170,9 @@ const DailyProgramCard: React.FC<DailyProgramCardProps> = ({
 const DayView: React.FC<{
   day: string
   programs: Program[]
-  onEdit: (program: Program) => void
-  onDelete: (id: string) => void
-  onDuplicate: (id: string) => void
+  onEdit?: (program: Program) => void
+  onDelete?: (id: string) => void
+  onDuplicate?: (id: string) => void
   visibleIds: Set<string> | string[]
   freeInfo?: FreeInfo
   conflicts?: ConflictInfo

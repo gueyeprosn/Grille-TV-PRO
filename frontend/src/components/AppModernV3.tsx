@@ -1315,11 +1315,8 @@ const AppModernV3: React.FC = () => {
               } : undefined}
               onEdit={canEditPrograms ? (program) => {
                 // S'assurer que le programme a toutes les propriétés requises
-                const fullProgram: Program = {
-                  ...program,
-                  end: program.end || program.start, // Fallback si end est undefined
-                  duration: program.duration || 0, // Fallback si duration est undefined
-                }
+                const fullProgram = programs.find((candidate) => candidate.id === program.id)
+                if (!fullProgram) return
                 setEditing(fullProgram)
                 setShowForm(true)
               } : undefined}
@@ -1402,7 +1399,9 @@ const AppModernV3: React.FC = () => {
                 startHour={weeklyWindow.startHour}
                 endHour={weeklyWindow.endHour}
                 onEditProgram={canEditPrograms ? (p) => {
-                  setEditing(p)
+                  const fullProgram = programs.find((candidate) => candidate.id === p.id)
+                  if (!fullProgram) return
+                  setEditing(fullProgram)
                   setShowForm(true)
                 } : undefined}
               />

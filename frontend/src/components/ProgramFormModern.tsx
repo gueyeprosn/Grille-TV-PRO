@@ -10,6 +10,7 @@ interface Program {
   title: string
   category: string
   typeDiffusion: string
+  type?: string
   start: string
   end: string
   duration: number

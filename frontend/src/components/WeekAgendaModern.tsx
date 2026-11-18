@@ -1156,7 +1156,7 @@ const WeekAgendaModern: React.FC<WeekAgendaModernProps> = ({
     const cardColorCss = rgbArrayToCss(cardColor)
     
     const isOnAir = status === "ON_AIR"
-    const isAired = status === "AIRED" || status === "DONE"
+    const isAired = status === "AIRED"
     const isCurrentlyOnAir = isToday && currentTime >= adjustedStartMin && currentTime <= adjustedEndMin && isOnAir
     const progress = isCurrentlyOnAir && adjustedDuration > 0
       ? Math.min(100, Math.max(0, ((currentTime - adjustedStartMin) / adjustedDuration) * 100))
